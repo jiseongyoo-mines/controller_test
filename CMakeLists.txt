@@ -199,5 +199,12 @@ include_directories(
 # catkin_add_nosetests(test)
 
 add_executable(controller_test src/controller_test.cpp)
+
 add_library(cPWM src/cPWM.cpp)
 target_link_libraries(controller_test ${catkin_LIBRARIES} cPWM)
+
+add_library(GPIOConst src/GPIOConst.cpp)
+target_link_libraries(controller_test ${catkin_LIBRARIES} GPIOConst)
+
+add_library(GPIOManager src/GPIOManager.cpp)
+target_link_libraries(controller_test ${catkin_LIBRARIES} GPIOManager)
