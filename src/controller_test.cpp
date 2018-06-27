@@ -36,9 +36,9 @@ int main(int argc, char **argv)
 //      echo bone_pwm_P9_16 > $SLOTS 
 
 // PWM test
-  cout << "Hello PWM on pin P9_16!" << endl;
+  cout << "Hello PWM on pin P8_13!" << endl;
 
-  string aux = "pwm_test_P9_16.9";
+  string aux = "pwm_test_P8_13.8";
 
   cPWM::cPWM* a;
   a = new cPWM::cPWM(aux);
@@ -49,7 +49,7 @@ int main(int argc, char **argv)
   a->Run();
 //  usleep(10000000);	//pausa de 10s=10,000,000us
 
-  while(true) { cout << "PWM is running" << endl; }
+  while(true) { cout << aux << " PWM is running" << endl; }
   a->Stop();
 
   return 0;
