@@ -1,5 +1,5 @@
 #include <ros/ros.h>
-#include <joint_trajectory_controller/hardware_interface_adapter.h>
+// #include <joint_trajectory_controller/hardware_interface_adapter.h>
 #include "controller_test/cPWM.h"
 #include "controller_test/GPIOConst.h"
 #include "controller_test/GPIOManager.h"
