@@ -36,9 +36,9 @@ int main(int argc, char **argv)
 //      echo bone_pwm_P9_16 > $SLOTS 
 
 // PWM test
-  cout << "Hello PWM on pin P8_13!" << endl;
+  cout << "Hello PWM on pin P9_16!" << endl;
 
-  string aux = "pwm_P8_13";
+  string aux = "pwm_test_P9_16.9";
 
   cPWM::cPWM* a;
   a = new cPWM::cPWM(aux);
