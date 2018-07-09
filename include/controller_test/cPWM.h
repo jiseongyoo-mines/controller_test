@@ -7,14 +7,14 @@
 #include <sstream>
 
 
-#define CAPEMGR_SLOT "/sys/devices/bone_capemgr.7/slots"
-#define SYSFS_EHRPWM_PREFIX "/sys/devices/ocp.2"
-#define SYSFS_EHRPWM_DUTY_NS "duty"
-#define SYSFS_EHRPWM_DUTY_PERCENT "duty_percent"
-#define SYSFS_EHRPWM_PERIOD_NS "period_ns"
-#define SYSFS_EHRPWM_PERIOD_FREQ "period_freq"
+#define CAPEMGR_SLOT "/sys/devices/platform/bone_capemgr/slots"
+#define SYSFS_EHRPWM_PREFIX "/sys/devices/platform/ocp.2"
+#define SYSFS_EHRPWM_DUTY_CYCLE "duty_cycle"
+#define SYSFS_EHRPWM_DUTY_CYCLE_PERCENT "duty_cycle_percent"
+#define SYSFS_EHRPWM_PERIOD "period"
+#define SYSFS_EHRPWM_FREQ "freq"
 #define SYSFS_EHRPWM_POLARITY "polarity"
-#define SYSFS_EHRPWM_RUN "run"
+#define SYSFS_EHRPWM_ENABLE "enable"
 #define SYSFS_EHRPWM_REQUEST "request"
 
 namespace cPWM {
@@ -30,20 +30,20 @@ namespace cPWM {
 
         private:
             int id;
-            int duty;
+            int duty_cycle;
             int period;
             int freq_Hz;
             //enum cPWM::Polarity polarity;
             int polarity;
-            int run;
+            int enable;
 
-            std::ofstream sysfsfid_duty_ns;
-            std::ofstream sysfsfid_duty_percent;
-            std::ofstream sysfsfid_period_ns;
-            std::ofstream sysfsfid_period_freq;
+            std::ofstream sysfsfid_duty_cycle;
+            std::ofstream sysfsfid_duty_cycle_percent;
+            std::ofstream sysfsfid_period;
+            std::ofstream sysfsfid_freq;
 
             std::ofstream sysfsfid_polarity;
-            std::ofstream sysfsfid_run;
+            std::ofstream sysfsfid_enable;
             std::ofstream sysfsfid_request;
 
         public:
@@ -51,16 +51,16 @@ namespace cPWM {
             cPWM(std::string pwm_name);
             virtual ~cPWM();
 
-            void Duty_ns(unsigned int nanoseconds);
-            void Duty_percent(unsigned int percent);  //TODO: check if floats are possible
+            void Duty_cycle(unsigned int nanoseconds);
+            void Duty_cycle_percent(unsigned int percent);  //TODO: check if floats are possible
 
-            void Period_ns(unsigned int nanoseconds);
-            void Period_freq(unsigned int freq_Hz);
+            void Period(unsigned int nanoseconds);
+            void Freq(unsigned int freq_Hz);
 
             //void Polarity(cPWM::Polarity polarity);
             void Polarity(int polarity);
-            void Run();
-            void Stop();
+            void Enable();
+            void Disable();
     };
 
 } /* namespace cPWM */
