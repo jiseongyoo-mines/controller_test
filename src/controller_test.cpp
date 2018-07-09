@@ -44,8 +44,8 @@ int main(int argc, char **argv)
   a = new cPWM::cPWM(aux);
 
   a->Period_ns(200000);	// 200000ns = 200us = 0.2ms = 5000hz
-  a->Duty_ns(  100000);
-  a->Polarity(0);
+  a->Duty_ns(  100000);	// 50% duty cycle
+  a->Polarity(1);
   a->Run();
 //  usleep(10000000);	//pause de 10s=10,000,000us
 
