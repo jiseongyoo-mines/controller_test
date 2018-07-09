@@ -45,7 +45,7 @@ int main(int argc, char **argv)
 
   a->Period_ns(200000);
   a->Duty_ns(  100000);
-  a->Polarity(1);
+  a->Polarity(0);
   a->Run();
 //  usleep(10000000);	//pausa de 10s=10,000,000us
 
