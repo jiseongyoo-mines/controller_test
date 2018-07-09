@@ -47,9 +47,9 @@ int main(int argc, char **argv)
   a->Duty_ns(  100000);
   a->Polarity(0);
   a->Run();
-  usleep(10000000);	//pause de 10s=10,000,000us
+//  usleep(10000000);	//pause de 10s=10,000,000us
 
-//  while(true) { cout << aux << " PWM is running" << endl; usleep(1000000);}
+  while(true) { cout << aux << " PWM is running" << endl; usleep(1000000);}
   a->Stop();
 
   return 0;
