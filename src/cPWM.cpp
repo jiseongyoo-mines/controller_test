@@ -31,35 +31,35 @@ namespace cPWM {
 
         cPWM::id = id;
 
-        std::stringstream sysfsfile_duty_ns;
-        std::stringstream sysfsfile_duty_percent;
+        std::stringstream sysfsfile_duty_cycle;
+        std::stringstream sysfsfile_duty_cycle_percent;
 
-        std::stringstream sysfsfile_period_ns;
-        std::stringstream sysfsfile_period_freq;
+        std::stringstream sysfsfile_period;
+        std::stringstream sysfsfile_freq;
 
         std::stringstream sysfsfile_polarity;
-        std::stringstream sysfsfile_run;
+        std::stringstream sysfsfile_enable;
         std::stringstream sysfsfile_request;
 
-        sysfsfile_duty_ns << SYSFS_EHRPWM_PREFIX << "/" << pwm_name << "/" << SYSFS_EHRPWM_DUTY_NS;
-        sysfsfile_duty_percent << SYSFS_EHRPWM_PREFIX << "/" << pwm_name << "/" << SYSFS_EHRPWM_DUTY_PERCENT;
+        sysfsfile_duty_cycle << SYSFS_EHRPWM_PREFIX << "/" << pwm_name << "/" << SYSFS_EHRPWM_DUTY_CYCLE;
+        sysfsfile_duty_cycle_percent << SYSFS_EHRPWM_PREFIX << "/" << pwm_name << "/" << SYSFS_EHRPWM_DUTY_CYCLE_PERCENT;
 
-        sysfsfile_period_ns << SYSFS_EHRPWM_PREFIX << "/" << pwm_name << "/" << SYSFS_EHRPWM_PERIOD_NS;
-        sysfsfile_period_freq << SYSFS_EHRPWM_PREFIX << "/" << pwm_name << "/" << SYSFS_EHRPWM_PERIOD_FREQ;
+        sysfsfile_period << SYSFS_EHRPWM_PREFIX << "/" << pwm_name << "/" << SYSFS_EHRPWM_PERIOD;
+        sysfsfile_freq << SYSFS_EHRPWM_PREFIX << "/" << pwm_name << "/" << SYSFS_EHRPWM_FREQ;
 
         sysfsfile_polarity << SYSFS_EHRPWM_PREFIX << "/" << pwm_name << "/" << SYSFS_EHRPWM_POLARITY;
-        sysfsfile_run << SYSFS_EHRPWM_PREFIX << "/" << pwm_name << "/" << SYSFS_EHRPWM_RUN;
+        sysfsfile_enable << SYSFS_EHRPWM_PREFIX << "/" << pwm_name << "/" << SYSFS_EHRPWM_ENABLE;
         sysfsfile_request << SYSFS_EHRPWM_PREFIX << "/" << pwm_name << "/" << SYSFS_EHRPWM_REQUEST;
 
         // perform the initializations using the private variables
-        sysfsfid_duty_ns.open(sysfsfile_duty_ns.str().c_str());
-        sysfsfid_duty_percent.open(sysfsfile_duty_percent.str().c_str());
+        sysfsfid_duty_cycle.open(sysfsfile_duty_cycle.str().c_str());
+        sysfsfid_duty_cycle_percent.open(sysfsfile_duty_cycle_percent.str().c_str());
 
-        sysfsfid_period_ns.open(sysfsfile_period_ns.str().c_str());
-        sysfsfid_period_freq.open(sysfsfile_period_freq.str().c_str());
+        sysfsfid_period.open(sysfsfile_period.str().c_str());
+        sysfsfid_freq.open(sysfsfile_freq.str().c_str());
 
         sysfsfid_polarity.open(sysfsfile_polarity.str().c_str());
-        sysfsfid_run.open(sysfsfile_run.str().c_str());
+        sysfsfid_enable.open(sysfsfile_enable.str().c_str());
 
         sysfsfid_request.open(sysfsfile_request.str().c_str());
     }
@@ -70,13 +70,13 @@ namespace cPWM {
      * @param[in]	nanoseconds:	duty cycle time in nanoseconds 
      *
      */
-    void cPWM::Duty_ns(unsigned int nanoseconds)
+    void cPWM::Duty_cycle(unsigned int nanoseconds)
     {
         if(nanoseconds > cPWM::period)
             throw std::out_of_range("Duty_ns: ");
 
-        cPWM::duty = nanoseconds;
-        sysfsfid_duty_ns << nanoseconds << std::endl;
+        cPWM::duty_cycle = nanoseconds;
+        sysfsfid_duty_cycle << nanoseconds << std::endl;
     }
 
     /**
@@ -85,12 +85,12 @@ namespace cPWM {
      * @param[in]	percent:	duty cycle time in percent 
      *
      */
-    void cPWM::Duty_percent(unsigned int percent)
+    void cPWM::Duty_cycle_percent(unsigned int percent)
     {
         if(percent > 100)
             throw std::out_of_range("Duty_percent: ");
 
-        sysfsfid_duty_percent << percent << std::endl;
+        sysfsfid_duty_cycle_percent << percent << std::endl;
     }
 
 
@@ -100,11 +100,11 @@ namespace cPWM {
      * @param[in]	nanoseconds:	period time in nanoseconds
      *
      */
-    void cPWM::Period_ns(unsigned int nanoseconds)
+    void cPWM::Period(unsigned int nanoseconds)
     {
         cPWM::period  = nanoseconds;
         cPWM::freq_Hz = 1000000000 / nanoseconds;
-        sysfsfid_period_ns << nanoseconds << std::endl;
+        sysfsfid_period << nanoseconds << std::endl;
     }
 
     /**
@@ -113,11 +113,11 @@ namespace cPWM {
      * @param[in]	freq_Hz:	PWM frequency in Hz
      *
      */
-    void cPWM::Period_freq(unsigned int freq_Hz)
+    void cPWM::Freq(unsigned int freq_Hz)
     {
         cPWM::freq_Hz = freq_Hz;
         cPWM::period  = 1000000000 / freq_Hz;
-        sysfsfid_period_freq << freq_Hz<< std::endl;
+        sysfsfid_freq << freq_Hz<< std::endl;
     }
 
     /**
@@ -143,10 +143,10 @@ namespace cPWM {
      *
      *
      */
-    void cPWM::Run()
+    void cPWM::Enable()
     {
-        sysfsfid_run << "1" << std::endl;
-        cPWM::run = 1;
+        sysfsfid_enable << "1" << std::endl;
+        cPWM::enable = 1;
     }
 
     /**
@@ -154,10 +154,10 @@ namespace cPWM {
      *
      *
      */
-    void cPWM::Stop()
+    void cPWM::Disable()
     {
-        sysfsfid_run << "0" << std::endl;
-        cPWM::run = 0;
+        sysfsfid_enable << "0" << std::endl;
+        cPWM::enable = 0;
     }
 
 
@@ -167,7 +167,7 @@ namespace cPWM {
      */
     cPWM::~cPWM()
     {
-        sysfsfid_run << "0" << std::endl;
+        sysfsfid_enable << "0" << std::endl;
 
     }
 

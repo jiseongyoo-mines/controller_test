@@ -43,14 +43,14 @@ int main(int argc, char **argv)
   cPWM::cPWM* a;
   a = new cPWM::cPWM(aux);
 
-  a->Period_ns(200000);	// 200000ns = 200us = 0.2ms = 5000hz
-  a->Duty_ns(  100000);	// 50% duty cycle
+  a->Period(1000000000);	// 200000ns = 200us = 0.2ms = 5000hz
+  a->Duty_cycle(500000000);	// 50% duty cycle
   a->Polarity(1);
-  a->Run();
+  a->Enable();
 //  usleep(10000000);	//pause de 10s=10,000,000us
 
   while(true) { cout << aux << " PWM is running" << endl; usleep(1000000);}
-  a->Stop();
+  a->Disable();
 
   return 0;
 }
