@@ -100,6 +100,7 @@ namespace cPWM {
         sysfsfid_pin_state.open(sysfsfile_pin_state.str().c_str());
         sysfsfid_pin_state << "pwm" << std::endl;
         
+        sysfsfid_pwmchip.open(sysfsfile_pwmchip.str().c_stre());
         sysfsfid_pwmchip << exportNumber;
         
         sysfsfid_duty_cycle.open(sysfsfile_duty_cycle.str().c_str());
@@ -217,7 +218,7 @@ namespace cPWM {
     {
         sysfsfid_enable << "0" << std::endl;
         sysfsfid_pin_state << "default" << std::endl;
-
+        std::cout<< "PWM end" << std::endl;
     }
 
 } /* namespace cPWM */

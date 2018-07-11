@@ -51,6 +51,6 @@ int main(int argc, char **argv)
 
   while(true) { cout << aux << " PWM is running" << endl; usleep(1000000);}
   a->Disable();
-
+  
   return 0;
 }
