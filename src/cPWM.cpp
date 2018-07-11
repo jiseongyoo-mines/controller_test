@@ -84,30 +84,24 @@ namespace cPWM {
 
         // set the paths for initializations
         sysfsfile_pin_state << SYSFS_EHRPWM_PIN_STATE << pin_number << "_pinmux/state";
-        std::cout << sysfsfile_pin_state.str() << std::endl;
-        sysfsfile_pwmchip << SYSFS_EHRPWM_PREFIX << "/" << pwmchip << "export";
-        std::cout << sysfsfile_pwmchip.str() << std::endl;
+        sysfsfile_pwmchip << SYSFS_EHRPWM_PREFIX << "/" << pwmchip << "/export";
 
         sysfsfile_duty_cycle << SYSFS_EHRPWM_PREFIX << "/" << pwmchip << "/" << pwm_name << "/" << SYSFS_EHRPWM_DUTY_CYCLE;
-        std::cout << sysfsfile_duty_cycle.str() << std::endl;
         sysfsfile_duty_cycle_percent << SYSFS_EHRPWM_PREFIX << "/" << pwmchip << "/" << pwm_name << "/" << SYSFS_EHRPWM_DUTY_CYCLE_PERCENT;
-        std::cout << sysfsfile_duty_cycle_percent.str() << std::endl;
 
         sysfsfile_period << SYSFS_EHRPWM_PREFIX << "/" << pwmchip << "/" << pwm_name << "/" << SYSFS_EHRPWM_PERIOD;
-        std::cout << sysfsfile_period.str() << std::endl;
         sysfsfile_freq << SYSFS_EHRPWM_PREFIX << "/" << pwmchip << "/" << pwm_name << "/" << SYSFS_EHRPWM_FREQ;
-        std::cout << sysfsfile_freq.str() << std::endl;
 
         sysfsfile_polarity << SYSFS_EHRPWM_PREFIX << "/" << pwmchip << "/" << pwm_name << "/" << SYSFS_EHRPWM_POLARITY;
-        std::cout << sysfsfile_polarity.str() << std::endl;
         sysfsfile_enable << SYSFS_EHRPWM_PREFIX << "/" << pwmchip << "/" << pwm_name << "/" << SYSFS_EHRPWM_ENABLE;
-        std::cout << sysfsfile_enable.str() << std::endl;
 
         // perform the initializations using the private variables
         sysfsfid_pin_state.open(sysfsfile_pin_state.str().c_str());
         sysfsfid_pin_state << "pwm" << std::endl;
         
         sysfsfid_pwmchip.open(sysfsfile_pwmchip.str().c_str());
+        if (sysfsfid_pwmchip == NULL)
+                std::cout << "File open failed" << std::endl;
         sysfsfid_pwmchip << exportNumber;
         
         sysfsfid_duty_cycle.open(sysfsfile_duty_cycle.str().c_str());
