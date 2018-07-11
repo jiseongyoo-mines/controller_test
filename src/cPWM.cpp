@@ -32,7 +32,8 @@ namespace cPWM {
         cPWM::id = id;
 
         std::stringstream sysfsfile_pin_state;
-        std::string pwm_name;
+        std::stringstream sysfsfile_pwmchip;
+        std::string pwm_name, pwmchip;
 
         std::stringstream sysfsfile_duty_cycle;
         std::stringstream sysfsfile_duty_cycle_percent;
@@ -42,20 +43,37 @@ namespace cPWM {
 
         std::stringstream sysfsfile_polarity;
         std::stringstream sysfsfile_enable;
-        std::stringstream sysfsfile_request;
 
         if (pin_number == "P9_14")
-		pwm_name = "pwm-3:0";
+        {
+                pwm_name = "pwm-3:0";
+                pwmchip = "pwmchip3";
+        }
 	else if (pin_number == "P9_16")
+        {
                 pwm_name = "pwm-3:1";
+                pwmchip = "pwmchip3";
+        }
         else if (pin_number == "P9_22")
-                pwm_name = "pwm-1:0";
+        {
+                pwm_name = "pwm-1:0"; 
+                pwmchip = "pwmchip1";
+        }
         else if (pin_number == "P9_21")
+        {
                 pwm_name = "pwm-1:1";
+                pwmchip = "pwmchip1";
+        }
         else if (pin_number == "P8_19")
+        {
                 pwm_name = "pwm-6:0";
+                pwmchip = "pwmchip6";
+        }
         else if (pin_number == "P8_13")
-                pwm_name = "pwm-6:1";
+        {
+                pwm_name = "pwm-6:1"; 
+                pwmchip = "pwmchip6";
+        }
         else
         {
                 pwm_name = "";
@@ -65,21 +83,27 @@ namespace cPWM {
 
         // set the paths for initializations
         sysfsfile_pin_state << SYSFS_EHRPWM_PIN_STATE << pin_number << "_pinmux/state";
+        
+        sysfsfile_pwmchip << SYSFS_EHRPWM_PREFIX << "/" << pwmchip << "export";
 
-        sysfsfile_duty_cycle << SYSFS_EHRPWM_PREFIX << "/" << pwm_name << "/" << SYSFS_EHRPWM_DUTY_CYCLE;
-        sysfsfile_duty_cycle_percent << SYSFS_EHRPWM_PREFIX << "/" << pwm_name << "/" << SYSFS_EHRPWM_DUTY_CYCLE_PERCENT;
+        sysfsfile_duty_cycle << SYSFS_EHRPWM_PREFIX << "/" << pwmchip << "/" << pwm_name << "/" << SYSFS_EHRPWM_DUTY_CYCLE;
+        sysfsfile_duty_cycle_percent << SYSFS_EHRPWM_PREFIX << "/" << pwmchip << "/" << pwm_name << "/" << SYSFS_EHRPWM_DUTY_CYCLE_PERCENT;
 
-        sysfsfile_period << SYSFS_EHRPWM_PREFIX << "/" << pwm_name << "/" << SYSFS_EHRPWM_PERIOD;
-        sysfsfile_freq << SYSFS_EHRPWM_PREFIX << "/" << pwm_name << "/" << SYSFS_EHRPWM_FREQ;
+        sysfsfile_period << SYSFS_EHRPWM_PREFIX << "/" << pwmchip << "/" << pwm_name << "/" << SYSFS_EHRPWM_PERIOD;
+        sysfsfile_freq << SYSFS_EHRPWM_PREFIX << "/" << pwmchip << "/" << pwm_name << "/" << SYSFS_EHRPWM_FREQ;
 
-        sysfsfile_polarity << SYSFS_EHRPWM_PREFIX << "/" << pwm_name << "/" << SYSFS_EHRPWM_POLARITY;
-        sysfsfile_enable << SYSFS_EHRPWM_PREFIX << "/" << pwm_name << "/" << SYSFS_EHRPWM_ENABLE;
-        sysfsfile_request << SYSFS_EHRPWM_PREFIX << "/" << pwm_name << "/" << SYSFS_EHRPWM_REQUEST;
+        sysfsfile_polarity << SYSFS_EHRPWM_PREFIX << "/" << pwmchip << "/" << pwm_name << "/" << SYSFS_EHRPWM_POLARITY;
+        sysfsfile_enable << SYSFS_EHRPWM_PREFIX << "/" << pwmchip << "/" << pwm_name << "/" << SYSFS_EHRPWM_ENABLE;
 
         // perform the initializations using the private variables
         sysfsfid_pin_state.open(sysfsfile_pin_state.str().c_str());
         sysfsfid_pin_state << "pwm" << std::endl;
-
+        
+        if (pwm_name[6] == '0')
+                sysfsfid_pwmchip << 0 << std::endl;
+        else if (pwm_name[6] == '1')
+                sysfsfid_pwmchip << 1 << std::endl;
+        
         sysfsfid_duty_cycle.open(sysfsfile_duty_cycle.str().c_str());
         sysfsfid_duty_cycle_percent.open(sysfsfile_duty_cycle_percent.str().c_str());
 
@@ -88,8 +112,6 @@ namespace cPWM {
 
         sysfsfid_polarity.open(sysfsfile_polarity.str().c_str());
         sysfsfid_enable.open(sysfsfile_enable.str().c_str());
-
-        sysfsfid_request.open(sysfsfile_request.str().c_str());
     }
 
     /**
@@ -160,8 +182,8 @@ namespace cPWM {
         {
             case 1:  sysfsfid_polarity << 1 << std::endl;
                      break;
-            case 0:   sysfsfid_polarity << 0 << std::endl;
-                      break;
+            case 0:  sysfsfid_polarity << 0 << std::endl;
+                     break;
         }
         cPWM::polarity = polarity;
     }
