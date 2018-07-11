@@ -38,7 +38,7 @@ int main(int argc, char **argv)
 // PWM test
   cout << "Hello PWM on pin P9_16!" << endl;
 
-  string aux = "pwm_test_P9_16.9";
+  string aux = "P9_16";
 
   cPWM::cPWM* a;
   a = new cPWM::cPWM(aux);

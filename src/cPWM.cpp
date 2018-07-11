@@ -24,12 +24,15 @@ namespace cPWM {
      * @return		a cPWM object
      *
      */
-    cPWM::cPWM(std::string pwm_name)
+    cPWM::cPWM(std::string pin_number)
     {
         ///TODO: 	Add clock selection (mmap). By now you must use setPWMReg.py method
         ///FIXME:	pin mux settings should be done here? or at a highet level?
 
         cPWM::id = id;
+
+        std::stringstream sysfsfile_pin_state;
+        std::string pwm_name;
 
         std::stringstream sysfsfile_duty_cycle;
         std::stringstream sysfsfile_duty_cycle_percent;
@@ -40,6 +43,28 @@ namespace cPWM {
         std::stringstream sysfsfile_polarity;
         std::stringstream sysfsfile_enable;
         std::stringstream sysfsfile_request;
+
+        if (pin_number == "P9_14")
+		pwm_name = "pwm-3:0";
+	else if (pin_number == "P9_16")
+                pwm_name = "pwm-3:1";
+        else if (pin_number == "P9_22")
+                pwm_name = "pwm-1:0";
+        else if (pin_number == "P9_21")
+                pwm_name = "pwm-1:1";
+        else if (pin_number == "P8_19")
+                pwm_name = "pwm-6:0";
+        else if (pin_number == "P8_13")
+                pwm_name = "pwm-6:1";
+        else
+        {
+                pwm_name = "";
+                std::cout << "Wrong PWM pin name" << std::endl;
+        }
+
+
+        // set the paths for initializations
+        sysfsfile_pin_state << SYSFS_EHRPWM_PIN_STATE << pin_number << "_pinmux/state";
 
         sysfsfile_duty_cycle << SYSFS_EHRPWM_PREFIX << "/" << pwm_name << "/" << SYSFS_EHRPWM_DUTY_CYCLE;
         sysfsfile_duty_cycle_percent << SYSFS_EHRPWM_PREFIX << "/" << pwm_name << "/" << SYSFS_EHRPWM_DUTY_CYCLE_PERCENT;
@@ -52,6 +77,9 @@ namespace cPWM {
         sysfsfile_request << SYSFS_EHRPWM_PREFIX << "/" << pwm_name << "/" << SYSFS_EHRPWM_REQUEST;
 
         // perform the initializations using the private variables
+        sysfsfid_pin_state.open(sysfsfile_pin_state.str().c_str());
+        sysfsfid_pin_state << "pwm" << std::endl;
+
         sysfsfid_duty_cycle.open(sysfsfile_duty_cycle.str().c_str());
         sysfsfid_duty_cycle_percent.open(sysfsfile_duty_cycle_percent.str().c_str());
 
@@ -168,6 +196,7 @@ namespace cPWM {
     cPWM::~cPWM()
     {
         sysfsfid_enable << "0" << std::endl;
+        sysfsfid_pin_state << "default" << std::endl;
 
     }
 
