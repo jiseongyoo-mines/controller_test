@@ -7,8 +7,9 @@
 #include <sstream>
 
 
-#define CAPEMGR_SLOT "/sys/devices/platform/bone_capemgr/slots"
-#define SYSFS_EHRPWM_PREFIX "/sys/devices/platform/ocp.2"
+#define CAPEMGR_SLOT "--"
+#define SYSFS_EHRPWM_PIN_STATE "/sys/devices/platform/ocp/ocp:"
+#define SYSFS_EHRPWM_PREFIX "/sys/class/pwm/"
 #define SYSFS_EHRPWM_DUTY_CYCLE "duty_cycle"
 #define SYSFS_EHRPWM_DUTY_CYCLE_PERCENT "duty_cycle_percent"
 #define SYSFS_EHRPWM_PERIOD "period"
@@ -37,6 +38,8 @@ namespace cPWM {
             int polarity;
             int enable;
 
+            std::ofstream sysfsfid_pin_state;
+
             std::ofstream sysfsfid_duty_cycle;
             std::ofstream sysfsfid_duty_cycle_percent;
             std::ofstream sysfsfid_period;
@@ -48,7 +51,7 @@ namespace cPWM {
 
         public:
 
-            cPWM(std::string pwm_name);
+            cPWM(std::string pin_number);
             virtual ~cPWM();
 
             void Duty_cycle(unsigned int nanoseconds);
