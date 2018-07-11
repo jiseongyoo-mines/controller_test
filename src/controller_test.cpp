@@ -36,7 +36,7 @@ int main(int argc, char **argv)
 //      echo bone_pwm_P9_16 > $SLOTS 
 
 // PWM test
-/*
+
   cout << "Hello PWM on pin P9_16!" << endl;
 
   string aux = "P9_16";
@@ -52,30 +52,6 @@ int main(int argc, char **argv)
 
   while(true) { cout << aux << " PWM is running" << endl; usleep(1000000);}
   a->Disable();
-*/
-
-
-char fileName[50];
-
-        std::string PWM_DIR = "/sys/class/pwm";
-        std::string PWM_CHIP = "/pwmchip3";
-
-        sprintf(fileName, "%s%s/export", PWM_DIR, PWM_CHIP); 
-
-
-        // Use fopen() to open the file for write access.
-        FILE *pfile = fopen(fileName, "w");
-        if (pfile == NULL) {
-	        printf("ERROR: Unable to open export file.\n");
-	        return -1;
-        }
-        // Write to data to the file using fprintf():	
-        if (1 != fprintf(pfile, "%i", 1)) {
-	        printf("ERROR: Unable to export pin.\n");
-	        return -1;
-        }
-        // Close the file using fclose():
-        fclose(pfile);
 	
   return 0;
 }

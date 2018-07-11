@@ -84,17 +84,24 @@ namespace cPWM {
 
         // set the paths for initializations
         sysfsfile_pin_state << SYSFS_EHRPWM_PIN_STATE << pin_number << "_pinmux/state";
-        
+        std::cout << sysfsfile_pin_state << std::endl;
         sysfsfile_pwmchip << SYSFS_EHRPWM_PREFIX << "/" << pwmchip << "export";
+        std::cout << sysfsfile_pwmchip << std::endl;
 
         sysfsfile_duty_cycle << SYSFS_EHRPWM_PREFIX << "/" << pwmchip << "/" << pwm_name << "/" << SYSFS_EHRPWM_DUTY_CYCLE;
+        std::cout << sysfsfile_duty_cycle << std::endl;
         sysfsfile_duty_cycle_percent << SYSFS_EHRPWM_PREFIX << "/" << pwmchip << "/" << pwm_name << "/" << SYSFS_EHRPWM_DUTY_CYCLE_PERCENT;
+        std::cout << sysfsfile_duty_cycle_percent << std::endl;
 
         sysfsfile_period << SYSFS_EHRPWM_PREFIX << "/" << pwmchip << "/" << pwm_name << "/" << SYSFS_EHRPWM_PERIOD;
+        std::cout << sysfsfile_period << std::endl;
         sysfsfile_freq << SYSFS_EHRPWM_PREFIX << "/" << pwmchip << "/" << pwm_name << "/" << SYSFS_EHRPWM_FREQ;
+        std::cout << sysfsfile_freq << std::endl;
 
         sysfsfile_polarity << SYSFS_EHRPWM_PREFIX << "/" << pwmchip << "/" << pwm_name << "/" << SYSFS_EHRPWM_POLARITY;
+        std::cout << sysfsfile_polarity << std::endl;
         sysfsfile_enable << SYSFS_EHRPWM_PREFIX << "/" << pwmchip << "/" << pwm_name << "/" << SYSFS_EHRPWM_ENABLE;
+        std::cout << sysfsfile_enable << std::endl;
 
         // perform the initializations using the private variables
         sysfsfid_pin_state.open(sysfsfile_pin_state.str().c_str());
