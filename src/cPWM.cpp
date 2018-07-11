@@ -34,6 +34,7 @@ namespace cPWM {
         std::stringstream sysfsfile_pin_state;
         std::stringstream sysfsfile_pwmchip;
         std::string pwm_name, pwmchip;
+        int exportNumber;
 
         std::stringstream sysfsfile_duty_cycle;
         std::stringstream sysfsfile_duty_cycle_percent;
@@ -44,35 +45,35 @@ namespace cPWM {
         std::stringstream sysfsfile_polarity;
         std::stringstream sysfsfile_enable;
 
-        if (pin_number == "P9_14")
+        if (pin_number == "P9_14" || pin_number == "P8_36")
         {
                 pwm_name = "pwm-3:0";
-                pwmchip = "pwmchip3";
+                pwmchip = "pwmchip3"; exportNumber = 0;
         }
-	else if (pin_number == "P9_16")
+	else if (pin_number == "P9_16" || pin_number == "P8_34")
         {
                 pwm_name = "pwm-3:1";
-                pwmchip = "pwmchip3";
+                pwmchip = "pwmchip3"; exportNumber = 1;
         }
-        else if (pin_number == "P9_22")
+        else if (pin_number == "P9_22" || pin_number == "P9_31")
         {
                 pwm_name = "pwm-1:0"; 
-                pwmchip = "pwmchip1";
+                pwmchip = "pwmchip1"; exportNumber = 0;
         }
-        else if (pin_number == "P9_21")
+        else if (pin_number == "P9_21" || pin_number == "P9_29")
         {
                 pwm_name = "pwm-1:1";
-                pwmchip = "pwmchip1";
+                pwmchip = "pwmchip1"; exportNumber = 1;
         }
-        else if (pin_number == "P8_19")
+        else if (pin_number == "P8_19" || pin_number == "P8_45")
         {
                 pwm_name = "pwm-6:0";
-                pwmchip = "pwmchip6";
+                pwmchip = "pwmchip6"; exportNumber = 0;
         }
-        else if (pin_number == "P8_13")
+        else if (pin_number == "P8_13" || pin_number == "P8_46")
         {
                 pwm_name = "pwm-6:1"; 
-                pwmchip = "pwmchip6";
+                pwmchip = "pwmchip6"; exportNumber = 1;
         }
         else
         {
@@ -99,10 +100,7 @@ namespace cPWM {
         sysfsfid_pin_state.open(sysfsfile_pin_state.str().c_str());
         sysfsfid_pin_state << "pwm" << std::endl;
         
-        if (pwm_name[6] == '0')
-                sysfsfid_pwmchip << 0 << std::endl;
-        else if (pwm_name[6] == '1')
-                sysfsfid_pwmchip << 1 << std::endl;
+        sysfsfid_pwmchip << exportNumber;
         
         sysfsfid_duty_cycle.open(sysfsfile_duty_cycle.str().c_str());
         sysfsfid_duty_cycle_percent.open(sysfsfile_duty_cycle_percent.str().c_str());
