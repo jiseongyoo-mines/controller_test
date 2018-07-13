@@ -24,26 +24,26 @@ namespace cPWM {
      * @return		a cPWM object
      *
      */
-     
-    cPWM::id = id;
 
-    std::stringstream export_str;
-    std::stringstream sysfsfile_pin_state;
-    std::stringstream sysfsfile_pwmchip;
-    std::string pwm_name, pwmchip;
-    int exportNumber;
 
-    std::stringstream sysfsfile_duty_cycle;
-    std::stringstream sysfsfile_duty_cycle_percent;
-
-    std::stringstream sysfsfile_period;
-    std::stringstream sysfsfile_freq;
-
-    std::stringstream sysfsfile_polarity;
-    std::stringstream sysfsfile_enable;
      
     cPWM::cPWM(std::string pin_number)
     {
+        std::stringstream export_str;
+        std::stringstream sysfsfile_pin_state;
+        std::stringstream sysfsfile_pwmchip;
+        std::string pwm_name, pwmchip;
+        int exportNumber;
+
+        std::stringstream sysfsfile_duty_cycle;
+        std::stringstream sysfsfile_duty_cycle_percent;
+
+        std::stringstream sysfsfile_period;
+        std::stringstream sysfsfile_freq;
+
+        std::stringstream sysfsfile_polarity;
+        std::stringstream sysfsfile_enable;
+
         if (pin_number == "P9_14" || pin_number == "P8_36")
         {
                 pwm_name = "pwm-3:0";
