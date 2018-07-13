@@ -12,7 +12,7 @@ using namespace std;
 int main(int argc, char **argv)
 {
   //  Motor running test; dirA = Pin8_9, dirB = Pin8_14, enable = Pin8_28, PWM = Pin8_13
-  
+  /*
   cout << "Hello GPIO test" << endl;
 
   GPIO::GPIOManager* gp = GPIO::GPIOManager::getInstance();
@@ -44,27 +44,34 @@ int main(int argc, char **argv)
   a->Disable();
   
   delete a;
+  */
   
   //  GPIO test
-  /*
+  
   cout << "Hello GPIO test" << endl;
-
-  GPIO::GPIOManager* gp = GPIO::GPIOManager::getInstance();
-  int pin = GPIO::GPIOConst::getInstance()->getGpioByKey("P8_10");
- 
-  gp->setDirection(pin, GPIO::OUTPUT);
- 
-  while(true){
-      cout << "P8_10 High" << endl;
-      gp->setValue(pin, GPIO::HIGH);
-      sleep(2);
-      cout << "P8_10 Low" << endl;
-      gp->setValue(pin, GPIO::LOW);
-      sleep(2);
-  }
- 
-  gp->~GPIOManager();
-  */
+  string aux;
+  int pin;
+  
+  while(true)
+  {
+    cout << "Put GPIO pin ";
+    cin >> aux;
+    GPIO::GPIOManager* gp = GPIO::GPIOManager::getInstance();
+    pin = GPIO::GPIOConst::getInstance()->getGpioByKey(aux.c_str());
+   
+    gp->setDirection(pin, GPIO::OUTPUT);
+    
+    cout << aux << " High" << endl;
+    gp->setValue(pin, GPIO::HIGH);
+    sleep(2);
+    cout << aux << " Low" << endl;
+    gp->setValue(pin, GPIO::LOW);
+    sleep(2);
+    
+    gp->~GPIOManager();
+   }
+  
+    
 
   //  PWM test
   
