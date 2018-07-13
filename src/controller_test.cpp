@@ -37,23 +37,30 @@ int main(int argc, char **argv)
 
 // PWM test
 
-  cout << "Hello PWM on pin P9_16!" << endl;
+  string aux;
+  while( aux != "Q" && aux !="q")
+  {
+    cout << "Hello PWM Test Code" << endl;
+    cout << "Put PWM pin ";
+    cin << aux;
+    
 
-  string aux = "P9_16";
+    cPWM::cPWM* a;
+    a = new cPWM::cPWM(aux);
 
-  cPWM::cPWM* a;
-  a = new cPWM::cPWM(aux);
+    a->Period(1000000000);	// 200000ns = 200us = 0.2ms = 5000hz
+    a->Duty_cycle(500000000);	// 50% duty cycle
+    a->Polarity(1);
+    a->Enable();
+  //  usleep(10000000);	//pause de 10s=10,000,000us
 
-  a->Period(1000000000);	// 200000ns = 200us = 0.2ms = 5000hz
-  a->Duty_cycle(500000000);	// 50% duty cycle
-  a->Polarity(1);
-  a->Enable();
-//  usleep(10000000);	//pause de 10s=10,000,000us
-
-  cout << aux << " PWM is running" << endl;
-  usleep(10000000);     //pause de 10s=10,000,000us
-  
-  a->Disable();
+    cout << aux << " PWM enabled for 5s" << endl;
+    usleep(5000000);     //pause de 10s=10,000,000us
+    
+    a->Disable();
+    
+    delete a;
+	}
 	
   return 0;
 }
