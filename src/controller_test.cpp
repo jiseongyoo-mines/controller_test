@@ -43,7 +43,9 @@ int main(int argc, char **argv)
     cout << "Put PWM pin ";
     cin >> aux;
     
-    if ( aux != "Q" && aux !="q")
+    if ( aux == "Q" || aux =="q")
+      break;
+    else
     {
       cPWM::cPWM* a;
       a = new cPWM::cPWM(aux);
@@ -54,9 +56,10 @@ int main(int argc, char **argv)
       
     //  usleep(10000000);	//pause de 10s=10,000,000us
 
-      cout << aux << " PWM enabled for 5s" << endl;
+      cout << aux << " PWM enable" << endl;
       a->Enable();
-      usleep(5000000);     //pause de 10s=10,000,000us
+      usleep(10000000);
+      cout << aux << " PWM disable" << endl;
       a->Disable();
       
       delete a;

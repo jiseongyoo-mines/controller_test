@@ -25,7 +25,6 @@ namespace cPWM {
      *
      */
 
-
      
     cPWM::cPWM(std::string pin_number)
     {
@@ -80,9 +79,9 @@ namespace cPWM {
                 std::cout << "Wrong PWM pin name" << std::endl;
         }
 
+        // export pwmchip
         export_str << "/sys/class/pwm/" << pwmchip << "/export";
         std::ofstream exportpwm(export_str.str().c_str());
-
         exportpwm << exportNumber;
         exportpwm.close();
 
@@ -103,9 +102,6 @@ namespace cPWM {
         sysfsfid_pin_state.open(sysfsfile_pin_state.str().c_str());
         sysfsfid_pin_state << "pwm" << std::endl;
         
-//        sysfsfid_pwmchip.open(sysfsfile_pwmchip.str().c_str());
-//        sysfsfid_pwmchip << exportNumber;
-        
         sysfsfid_duty_cycle.open(sysfsfile_duty_cycle.str().c_str());
         sysfsfid_duty_cycle_percent.open(sysfsfile_duty_cycle_percent.str().c_str());
 
@@ -116,12 +112,8 @@ namespace cPWM {
         sysfsfid_enable.open(sysfsfile_enable.str().c_str());
     }
 
-    /**
-     * Set the duty cycle for the PWMss
-     *
-     * @param[in]	nanoseconds:	duty cycle time in nanoseconds 
-     *
-     */
+    // Set the duty cycle for the PWMss
+    // @param[in]	nanoseconds:	duty cycle time in nanoseconds 
     void cPWM::Duty_cycle(unsigned int nanoseconds)
     {
         if(nanoseconds > cPWM::period)
@@ -131,12 +123,8 @@ namespace cPWM {
         sysfsfid_duty_cycle << nanoseconds << std::endl;
     }
 
-    /**
-     * Set the duty cycle of the PWMss
-     *
-     * @param[in]	percent:	duty cycle time in percent 
-     *
-     */
+    // Set the duty cycle of the PWMss
+    // @param[in]	percent:	duty cycle time in percent
     void cPWM::Duty_cycle_percent(unsigned int percent)
     {
         if(percent > 100)
@@ -146,12 +134,8 @@ namespace cPWM {
     }
 
 
-    /**
-     * Set the period for the PWMss
-     *
-     * @param[in]	nanoseconds:	period time in nanoseconds
-     *
-     */
+    // Set the period for the PWMss
+    // @param[in]	nanoseconds:	period time in nanoseconds
     void cPWM::Period(unsigned int nanoseconds)
     {
         cPWM::period  = nanoseconds;
@@ -159,12 +143,8 @@ namespace cPWM {
         sysfsfid_period << nanoseconds << std::endl;
     }
 
-    /**
-     * Set the period for the PWMss
-     *
-     * @param[in]	freq_Hz:	PWM frequency in Hz
-     *
-     */
+    // Set the period for the PWMss
+    // @param[in]	freq_Hz:	PWM frequency in Hz
     void cPWM::Freq(unsigned int freq_Hz)
     {
         cPWM::freq_Hz = freq_Hz;
@@ -172,12 +152,8 @@ namespace cPWM {
         sysfsfid_freq << freq_Hz<< std::endl;
     }
 
-    /**
-     * Set the polarity for the PWMss
-     *
-     * @param[in]	polarity  polarity
-     *
-     */
+    // Set the polarity for the PWMss
+    // @param[in]	polarity  polarity
     void cPWM::Polarity(int polarity)
     {
         switch (polarity)
@@ -190,42 +166,23 @@ namespace cPWM {
         cPWM::polarity = polarity;
     }
 
-    /**
-     * Set the PWM to run status
-     *
-     *
-     */
+    // Set the PWM to run status
     void cPWM::Enable()
     {
         sysfsfid_enable << "1" << std::endl;
         cPWM::enable = 1;
     }
 
-    /**
-     * Stop the PWM
-     *
-     *
-     */
+    // Stop the PWM
     void cPWM::Disable()
     {
         sysfsfid_enable << "0" << std::endl;
         cPWM::enable = 0;
     }
 
-
-    /**
-     * cPWM Destructor, stops the PWMss
-     *
-     */
+    // cPWM Destructor, stops the PWMss
     cPWM::~cPWM()
     {
-        std::stringstream unexport_str;
-        unexport_str << "/sys/class/pwm/" << pwmchip << "/unexport";
-        std::ofstream unexportpwm(unexport_str.str().c_str());
-
-        unexportpwm << exportNumber;
-        unexportpwm.close();
-        
         sysfsfid_enable << "0" << std::endl;
         sysfsfid_pin_state << "default" << std::endl;
         std::cout<< "PWM end" << std::endl;
