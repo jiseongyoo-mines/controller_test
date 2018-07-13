@@ -36,31 +36,33 @@ int main(int argc, char **argv)
 //      echo bone_pwm_P9_16 > $SLOTS 
 
 // PWM test
-
+  cout << "Hello PWM Test Code" << endl;
   string aux;
-  while( aux != "Q" && aux !="q")
+  while(true)
   {
-    cout << "Hello PWM Test Code" << endl;
     cout << "Put PWM pin ";
-    cin << aux;
+    cin >> aux;
     
+    if ( aux != "Q" && aux !="q")
+    {
+      cPWM::cPWM* a;
+      a = new cPWM::cPWM(aux);
 
-    cPWM::cPWM* a;
-    a = new cPWM::cPWM(aux);
+      a->Period(1000000000);	// 200000ns = 200us = 0.2ms = 5000hz
+      a->Duty_cycle(500000000);	// 50% duty cycle
+      a->Polarity(1);
+      
+    //  usleep(10000000);	//pause de 10s=10,000,000us
 
-    a->Period(1000000000);	// 200000ns = 200us = 0.2ms = 5000hz
-    a->Duty_cycle(500000000);	// 50% duty cycle
-    a->Polarity(1);
-    a->Enable();
-  //  usleep(10000000);	//pause de 10s=10,000,000us
-
-    cout << aux << " PWM enabled for 5s" << endl;
-    usleep(5000000);     //pause de 10s=10,000,000us
-    
-    a->Disable();
-    
-    delete a;
+      cout << aux << " PWM enabled for 5s" << endl;
+      a->Enable();
+      usleep(5000000);     //pause de 10s=10,000,000us
+      a->Disable();
+      
+      delete a;
+    }
 	}
+	cout <<"Test ends"<< endl;
 	
   return 0;
 }
