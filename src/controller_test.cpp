@@ -50,7 +50,9 @@ int main(int argc, char **argv)
   a->Enable();
 //  usleep(10000000);	//pause de 10s=10,000,000us
 
-  while(true) { cout << aux << " PWM is running" << endl; usleep(1000000);}
+  cout << aux << " PWM is running" << endl;
+  usleep(10000000);     //pause de 10s=10,000,000us
+  
   a->Disable();
 	
   return 0;
