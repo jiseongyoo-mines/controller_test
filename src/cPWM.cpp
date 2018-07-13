@@ -29,6 +29,7 @@ namespace cPWM {
 
         cPWM::id = id;
 
+        std::stringstream export_str;
         std::stringstream sysfsfile_pin_state;
         std::stringstream sysfsfile_pwmchip;
         std::string pwm_name, pwmchip;
@@ -79,10 +80,10 @@ namespace cPWM {
                 std::cout << "Wrong PWM pin name" << std::endl;
         }
 
-        string export_str = "/sys/class/pwm/"+pwmchip+"/export";
-        ofstream exportpwm(export_str.c_str());
+        export_str << "/sys/class/pwm/" << pwmchip << "/export";
+        std::ofstream exportpwm(export_str.str().c_str());
 
-        exportpwm << this->exportNumber;
+        exportpwm << exportNumber;
         exportpwm.close();
 
         // set the paths for initializations
@@ -218,7 +219,13 @@ namespace cPWM {
      */
     cPWM::~cPWM()
     {
-    
+        std::stringstream unexport_str;
+        unexport_str << "/sys/class/pwm/" << pwmchip << "/unexport";
+        std::ofstream unexportpwm(unexport_str.str().c_str());
+
+        unexportpwm << exportNumber;
+        unexportpwm.close();
+        
         sysfsfid_enable << "0" << std::endl;
         sysfsfid_pin_state << "default" << std::endl;
         std::cout<< "PWM end" << std::endl;
