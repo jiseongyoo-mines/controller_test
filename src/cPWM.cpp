@@ -26,8 +26,6 @@ namespace cPWM {
      */
     cPWM::cPWM(std::string pin_number)
     {
-        ///TODO: 	Add clock selection (mmap). By now you must use setPWMReg.py method
-        ///FIXME:	pin mux settings should be done here? or at a highet level?
 
         cPWM::id = id;
 
@@ -81,10 +79,15 @@ namespace cPWM {
                 std::cout << "Wrong PWM pin name" << std::endl;
         }
 
+        string export_str = "/sys/class/pwm/"+pwmchip+"/export";
+        ofstream exportpwm(export_str.c_str());
+
+        exportpwm << this->exportNumber;
+        exportpwm.close();
 
         // set the paths for initializations
         sysfsfile_pin_state << SYSFS_EHRPWM_PIN_STATE << pin_number << "_pinmux/state";
-        sysfsfile_pwmchip << SYSFS_EHRPWM_PREFIX << "/" << pwmchip << "/export";
+        sysfsfile_pwmchip << SYSFS_EHRPWM_PREFIX << "/" << pwmchip;
 
         sysfsfile_duty_cycle << SYSFS_EHRPWM_PREFIX << "/" << pwmchip << "/" << pwm_name << "/" << SYSFS_EHRPWM_DUTY_CYCLE;
         sysfsfile_duty_cycle_percent << SYSFS_EHRPWM_PREFIX << "/" << pwmchip << "/" << pwm_name << "/" << SYSFS_EHRPWM_DUTY_CYCLE_PERCENT;
@@ -99,10 +102,8 @@ namespace cPWM {
         sysfsfid_pin_state.open(sysfsfile_pin_state.str().c_str());
         sysfsfid_pin_state << "pwm" << std::endl;
         
-        sysfsfid_pwmchip.open(sysfsfile_pwmchip.str().c_str());
-        if (sysfsfid_pwmchip == NULL)
-                std::cout << "File open failed" << std::endl;
-        sysfsfid_pwmchip << exportNumber;
+//        sysfsfid_pwmchip.open(sysfsfile_pwmchip.str().c_str());
+//        sysfsfid_pwmchip << exportNumber;
         
         sysfsfid_duty_cycle.open(sysfsfile_duty_cycle.str().c_str());
         sysfsfid_duty_cycle_percent.open(sysfsfile_duty_cycle_percent.str().c_str());
@@ -217,6 +218,7 @@ namespace cPWM {
      */
     cPWM::~cPWM()
     {
+    
         sysfsfid_enable << "0" << std::endl;
         sysfsfid_pin_state << "default" << std::endl;
         std::cout<< "PWM end" << std::endl;
