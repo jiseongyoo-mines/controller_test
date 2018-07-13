@@ -11,7 +11,7 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
-/*
+
   cout << "Hello GPIO test" << endl;
 
   GPIO::GPIOManager* gp = GPIO::GPIOManager::getInstance();
@@ -21,13 +21,13 @@ int main(int argc, char **argv)
  
   while(true){
       gp->setValue(pin, GPIO::HIGH);
-      sleep(5);
+      sleep(2);
       gp->setValue(pin, GPIO::LOW);
-      sleep(5);
+      sleep(2);
   }
  
   gp->~GPIOManager();
-*/
+
 
 // assuming that the clock and the pinmux is already done
 // how to:
@@ -35,7 +35,11 @@ int main(int argc, char **argv)
 //      echo am33xx_pwm     > $SLOTS
 //      echo bone_pwm_P9_16 > $SLOTS 
 
-// PWM test
+
+  /*
+    PWM test
+  */
+  /*
   cout << "Hello PWM Test Code" << endl;
   string aux;
   while(true)
@@ -66,6 +70,6 @@ int main(int argc, char **argv)
     }
 	}
 	cout <<"Test ends"<< endl;
-	
+	*/
   return 0;
 }
