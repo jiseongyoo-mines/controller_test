@@ -11,101 +11,109 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
-  //  Motor running test; dirA = Pin8_9, dirB = Pin8_14, enable = Pin8_28, PWM = Pin8_13
-  /*
-  cout << "Hello GPIO test" << endl;
+  // Test option, m:Motor, p:PWM, g:GPIO
+  char option;
+  bool quite = false;
+  
+  cout << "select test option (m:Motor, p:PWM, g:GPIO, q:Quite): ";
+  cin >> option;
+  
+  while(!quite){
+    switch (option){
+      case 'm':
+        //  Motor running test; dirA = Pin8_9, dirB = Pin8_14, enable = Pin8_28, PWM = Pin8_13
+        /*
+        cout << "Hello GPIO test" << endl;
 
-  GPIO::GPIOManager* gp = GPIO::GPIOManager::getInstance();
-  int pin = GPIO::GPIOConst::getInstance()->getGpioByKey("P8_9");
- 
-  gp->setDirection(pin, GPIO::OUTPUT);
-  cout << "P8_9 : High" << endl;
-  gp->setValue(pin, GPIO::HIGH);
+        GPIO::GPIOManager* gp = GPIO::GPIOManager::getInstance();
+        int pin = GPIO::GPIOConst::getInstance()->getGpioByKey("P8_9");
+       
+        gp->setDirection(pin, GPIO::OUTPUT);
+        cout << "P8_9 : High" << endl;
+        gp->setValue(pin, GPIO::HIGH);
+            
+        pin = GPIO::GPIOConst::getInstance()->getGpioByKey("P8_28");
+       
+        gp->setDirection(pin, GPIO::OUTPUT);
+        cout << "P8_28 : High" << endl;
+        gp->setValue(pin, GPIO::HIGH);
+        
+        string aux = "P8_9";
+
+        cPWM::cPWM* a;
+        a = new cPWM::cPWM(aux);
+
+        a->Period(1000000000);	// 200000ns = 200us = 0.2ms = 5000hz
+        a->Duty_cycle(500000000);	// 50% duty cycle
+        a->Polarity(1);
+        
+        cout << aux << " PWM enable" << endl;
+        a->Enable();
+        usleep(60000000);
+        cout << aux << " PWM disable" << endl;
+        a->Disable();
+        
+        delete a;
+        */
+        cout <<"Motor test is not available yet"<<endl;
+        break;
+      case 'g':
+        //  GPIO test
+        cout << "Hello GPIO test" << endl;
+        string aux;
+        int pin;
+        
+        cout << "Put GPIO pin ";
+        cin >> aux;
+        GPIO::GPIOManager* gp = GPIO::GPIOManager::getInstance();
+        pin = GPIO::GPIOConst::getInstance()->getGpioByKey(aux.c_str());
+       
+        gp->setDirection(pin, GPIO::OUTPUT);
+        
+        cout << aux << " High" << endl;
+        gp->setValue(pin, GPIO::HIGH);
+        sleep(2);
+        cout << aux << " Low" << endl;
+        gp->setValue(pin, GPIO::LOW);
+        sleep(2);
+        
+        gp->~GPIOManager();
+        cout <<"Test ends"<<endl;
+        break;
       
-  pin = GPIO::GPIOConst::getInstance()->getGpioByKey("P8_28");
- 
-  gp->setDirection(pin, GPIO::OUTPUT);
-  cout << "P8_28 : High" << endl;
-  gp->setValue(pin, GPIO::HIGH);
-  
-  string aux = "P8_9";
+      case 'p':
+        //  PWM test
+        cout << "Hello PWM Test" << endl;
+        string aux;
+        cout << "Put PWM pin ";
+        cin >> aux;
+        
+        cPWM::cPWM* a;
+        a = new cPWM::cPWM(aux);
 
-  cPWM::cPWM* a;
-  a = new cPWM::cPWM(aux);
-
-  a->Period(1000000000);	// 200000ns = 200us = 0.2ms = 5000hz
-  a->Duty_cycle(500000000);	// 50% duty cycle
-  a->Polarity(1);
-  
-  cout << aux << " PWM enable" << endl;
-  a->Enable();
-  usleep(60000000);
-  cout << aux << " PWM disable" << endl;
-  a->Disable();
-  
-  delete a;
-  */
-  
-  //  GPIO test
-  
-  cout << "Hello GPIO test" << endl;
-  string aux;
-  int pin;
-  
-  while(true)
-  {
-    cout << "Put GPIO pin ";
-    cin >> aux;
-    GPIO::GPIOManager* gp = GPIO::GPIOManager::getInstance();
-    pin = GPIO::GPIOConst::getInstance()->getGpioByKey(aux.c_str());
-   
-    gp->setDirection(pin, GPIO::OUTPUT);
-    
-    cout << aux << " High" << endl;
-    gp->setValue(pin, GPIO::HIGH);
-    sleep(2);
-    cout << aux << " Low" << endl;
-    gp->setValue(pin, GPIO::LOW);
-    sleep(2);
-    
-    gp->~GPIOManager();
-   }
-  
-    
-
-  //  PWM test
-  
-  /*
-  cout << "Hello PWM Test Code" << endl;
-  string aux;
-  while(true)
-  {
-    cout << "Put PWM pin ";
-    cin >> aux;
-    
-    if ( aux == "Q" || aux =="q")
-      break;
-    else
-    {
-      cPWM::cPWM* a;
-      a = new cPWM::cPWM(aux);
-
-      a->Period(1000000000);	// 200000ns = 200us = 0.2ms = 5000hz
-      a->Duty_cycle(500000000);	// 50% duty cycle
-      a->Polarity(1);
-      
-    //  usleep(10000000);	//pause de 10s=10,000,000us
-
-      cout << aux << " PWM enable" << endl;
-      a->Enable();
-      usleep(10000000);
-      cout << aux << " PWM disable" << endl;
-      a->Disable();
-      
-      delete a;
-    }
+        a->Period(1000000000);	// 200000ns = 200us = 0.2ms = 5000hz
+        a->Duty_cycle(500000000);	// 50% duty cycle
+        a->Polarity(1);
+        
+        cout << aux << " PWM enable" << endl;
+        a->Enable();
+        usleep(10000000);
+        cout << aux << " PWM disable" << endl;
+        a->Disable();
+        
+        delete a;
+	      cout <<"Test ends"<< endl;
+	      break;
+	      
+	    case 'q':
+	      cout <<"Quite the test"<<endl;
+	      quite = true;
+	      break;
+	      
+	    default:
+	      cout <<"Wrong test option"<<endl;
+	  }
 	}
-	cout <<"Test ends"<< endl;
-	*/
+	    
   return 0;
 }
