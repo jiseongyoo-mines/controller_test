@@ -14,11 +14,13 @@ int main(int argc, char **argv)
   // Test option, m:Motor, p:PWM, g:GPIO
   char option;
   bool quite = false;
-  
-  cout << "select test option (m:Motor, p:PWM, g:GPIO, q:Quite): ";
-  cin >> option;
+  string aux;
+  int pin;
   
   while(!quite){
+    cout << "select test option (m:Motor, p:PWM, g:GPIO, q:Quite): ";
+    cin >> option;
+    
     switch (option){
       case 'm':
         //  Motor running test; dirA = Pin8_9, dirB = Pin8_14, enable = Pin8_28, PWM = Pin8_13
@@ -57,17 +59,15 @@ int main(int argc, char **argv)
         */
         cout <<"Motor test is not available yet"<<endl;
         break;
+        
       case 'g':
         //  GPIO test
         cout << "Hello GPIO test" << endl;
-        string aux;
-        int pin;
-        
         cout << "Put GPIO pin ";
         cin >> aux;
+        
         GPIO::GPIOManager* gp = GPIO::GPIOManager::getInstance();
         pin = GPIO::GPIOConst::getInstance()->getGpioByKey(aux.c_str());
-       
         gp->setDirection(pin, GPIO::OUTPUT);
         
         cout << aux << " High" << endl;
@@ -84,7 +84,6 @@ int main(int argc, char **argv)
       case 'p':
         //  PWM test
         cout << "Hello PWM Test" << endl;
-        string aux;
         cout << "Put PWM pin ";
         cin >> aux;
         
@@ -102,16 +101,17 @@ int main(int argc, char **argv)
         a->Disable();
         
         delete a;
-	      cout <<"Test ends"<< endl;
-	      break;
-	      
-	    case 'q':
-	      cout <<"Quite the test"<<endl;
-	      quite = true;
-	      break;
-	      
-	    default:
-	      cout <<"Wrong test option"<<endl;
+        cout <<"Test ends"<< endl;
+        break;
+        
+      case 'q':
+        cout <<"Quite the test"<<endl;
+        quite = true;
+        break;
+        
+      default:
+        cout <<"Wrong test option"<<endl;
+        break;
 	  }
 	}
 	    
