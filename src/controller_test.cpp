@@ -16,6 +16,7 @@ int main(int argc, char **argv)
   bool quite = false;
   string aux;
   int pin;
+  GPIO::GPIOManager* gp=NULL;
   
   while(!quite){
     cout << "select test option (m:Motor, p:PWM, g:GPIO, q:Quite): ";
@@ -66,7 +67,7 @@ int main(int argc, char **argv)
         cout << "Put GPIO pin ";
         cin >> aux;
         
-        GPIO::GPIOManager* gp = GPIO::GPIOManager::getInstance();
+        gp = GPIO::GPIOManager::getInstance();
         pin = GPIO::GPIOConst::getInstance()->getGpioByKey(aux.c_str());
         gp->setDirection(pin, GPIO::OUTPUT);
         
