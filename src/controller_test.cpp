@@ -8,6 +8,7 @@
 
 //  Motor0 running test; dirA = Pin8_9, dirB = Pin8_14, enable = Pin8_28, PWM = Pin8_13
 #define MOTOR_0_PWM "P8_13"
+#define MOTOR_0_STBY "P8_8"
 #define MOTOR_0_DIRA "P8_9"
 #define MOTOR_0_DIRB "P8_14"
 #define MOTOR_0_ENABLE "P8_28"
@@ -24,6 +25,7 @@ int main(int argc, char **argv)
   string aux;
   int pin;
   GPIO::GPIOManager* gp=NULL;
+  cPWM::cPWM* a;
   
   while(!quite){
     cout << "select test option (m:Motor, p:PWM, g:GPIO, q:Quite): ";
@@ -33,12 +35,21 @@ int main(int argc, char **argv)
       case 'm':
         cout << "Hello Motor0 test" << endl;
 
-        GPIO::GPIOManager* gp = GPIO::GPIOManager::getInstance();
+        gp = GPIO::GPIOManager::getInstance();
+        // Motor standby set
+        pin = GPIO::GPIOConst::getInstance()->getGpioByKey(MOTOR_0_STBY);
+        gp->setDirection(pin, GPIO::OUTPUT);
+        gp->setValue(pin, GPIO::HIGH);
+        cout << "MOTOR0 Standby : High" << endl;
         // Motor direction set
         pin = GPIO::GPIOConst::getInstance()->getGpioByKey(MOTOR_0_DIRA);
         gp->setDirection(pin, GPIO::OUTPUT);
-        gp->setValue(pin, GPIO::HIGH);
+        gp->setValue(pin, GPIO::LOW);
         cout << "MOTOR0 DirA : High" << endl;
+        pin = GPIO::GPIOConst::getInstance()->getGpioByKey(MOTOR_0_DIRB);
+        gp->setDirection(pin, GPIO::OUTPUT);
+        gp->setValue(pin, GPIO::HIGH);
+        cout << "MOTOR0 DirB : Low" << endl;
         
         // Motor enable set
         pin = GPIO::GPIOConst::getInstance()->getGpioByKey(MOTOR_0_ENABLE);
@@ -47,8 +58,8 @@ int main(int argc, char **argv)
         cout << "MOTOR0 Enable : High" << endl;
         
         // Motor PWM set
-        string aux = MOTOR_0_PWM;
-        cPWM::cPWM* a;
+        aux = MOTOR_0_PWM;
+
         a = new cPWM::cPWM(aux);
 
         a->Period(1000000000);	// 200000ns = 200us = 0.2ms = 5000hz
@@ -92,7 +103,6 @@ int main(int argc, char **argv)
         cout << "Put PWM pin ";
         cin >> aux;
         
-        cPWM::cPWM* a;
         a = new cPWM::cPWM(aux);
 
         a->Period(1000000000);	// 200000ns = 200us = 0.2ms = 5000hz
