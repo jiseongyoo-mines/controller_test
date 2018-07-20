@@ -6,6 +6,13 @@
 #include <iostream>
 #include <unistd.h>
 
+//  Motor0 running test; dirA = Pin8_9, dirB = Pin8_14, enable = Pin8_28, PWM = Pin8_13
+#define MOTOR_0_PWM "P8_13"
+#define MOTOR_0_DIRA "P8_9"
+#define MOTOR_0_DIRB "P8_14"
+#define MOTOR_0_ENABLE "P8_28"
+
+
 struct JointState { double joint1;};
 using namespace std;
 
@@ -24,25 +31,23 @@ int main(int argc, char **argv)
     
     switch (option){
       case 'm':
-        //  Motor running test; dirA = Pin8_9, dirB = Pin8_14, enable = Pin8_28, PWM = Pin8_13
-        /*
-        cout << "Hello GPIO test" << endl;
+        cout << "Hello Motor0 test" << endl;
 
         GPIO::GPIOManager* gp = GPIO::GPIOManager::getInstance();
-        int pin = GPIO::GPIOConst::getInstance()->getGpioByKey("P8_9");
-       
+        // Motor direction set
+        pin = GPIO::GPIOConst::getInstance()->getGpioByKey(MOTOR_0_DIRA);
         gp->setDirection(pin, GPIO::OUTPUT);
-        cout << "P8_9 : High" << endl;
         gp->setValue(pin, GPIO::HIGH);
-            
-        pin = GPIO::GPIOConst::getInstance()->getGpioByKey("P8_28");
-       
-        gp->setDirection(pin, GPIO::OUTPUT);
-        cout << "P8_28 : High" << endl;
-        gp->setValue(pin, GPIO::HIGH);
+        cout << "MOTOR0 DirA : High" << endl;
         
-        string aux = "P8_9";
-
+        // Motor enable set
+        pin = GPIO::GPIOConst::getInstance()->getGpioByKey(MOTOR_0_ENABLE);
+        gp->setDirection(pin, GPIO::OUTPUT);
+        gp->setValue(pin, GPIO::HIGH);
+        cout << "MOTOR0 Enable : High" << endl;
+        
+        // Motor PWM set
+        string aux = MOTOR_0_PWM;
         cPWM::cPWM* a;
         a = new cPWM::cPWM(aux);
 
@@ -57,8 +62,7 @@ int main(int argc, char **argv)
         a->Disable();
         
         delete a;
-        */
-        cout <<"Motor test is not available yet"<<endl;
+        
         break;
         
       case 'g':
