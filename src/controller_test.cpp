@@ -242,19 +242,18 @@ int main(int argc, char **argv)
 	}
   */
   
-  string encoder = "/sys/devices/platform/ocp/48302000.epwmss/48302180.eqep";
-  eQEP eqep1(encoder, eQEP::eQEP_Mode_Absolute);
+  eQEP eqep2b("eqep2b", eQEP::eQEP_Mode_Absolute);
     
   // Set the unit time period to 100,000,000 ns, or 0.1 seconds
-  eqep1.set_period(100000000L);
+  eqep2b.set_period(100000000L);
 
   // Query back the period
-  std::cout << "[eQEP " << encoder << "] Period = " << eqep1.get_period() << " ns" << std::endl;
+  std::cout << "[eQEP " << encoder << "] Period = " << eqep2b.get_period() << " ns" << std::endl;
 
   // Read position indefintely
   while(1)
   {
-  std::cout << "[eQEP " << encoder << "] Position = " << eqep1.get_position() << std::endl;
+  std::cout << "[eQEP " << encoder << "] Position = " << eqep2b.get_position() << std::endl;
   }
   
   return 0;

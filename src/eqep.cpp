@@ -35,9 +35,32 @@
 #include <sys/stat.h>
  
 // Constructor for eQEP driver interface object
-eQEP::eQEP(std::string _path, eQEP::eQEP_Mode _mode)
-    : path(_path)
+eQEP::eQEP(std::string _encoder, eQEP::eQEP_Mode _mode)
 {
+    std::stringstream sysfsfile_pinA_state;
+    std::stringstream sysfsfile_pinB_state;
+    std::stringstream sysfsfile_path;
+
+    
+    if (_encoder == "eqep0"){
+    }
+    else if (_encoder == "eqep1"){
+    }
+    else if (_encoder == "eqep2"){
+    }
+    else if (_encoder == "eqep2b"){
+        path = "/sys/devices/platform/ocp/48304000.epwmss/48304180.eqep";
+        systsfile_pinA_state << "/sys/devices/platform/ocp/ocp:P8_12_pinmux/state";
+        systsfile_pinB_state << "/sys/devices/platform/ocp/ocp:P8_11_pinmux/state";
+    }
+    else{
+    }
+    
+    sysfsfid_pinA_state.open(sysfsfile_pin_state.str().c_str());
+    sysfsfid_pinA_state << "qep" << std::endl;
+    sysfsfid_pinB_state.open(sysfsfile_pin_state.str().c_str());
+    sysfsfid_pinB_state << "qep" << std::endl;
+    
     // Set the mode of the hardware
     this->set_mode(_mode);
     
