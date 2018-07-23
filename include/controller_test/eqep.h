@@ -49,7 +49,7 @@ public:
     } eQEP_Mode;
 
     // Default constructor for the eQEP interface driver
-    eQEP(std::string _path, eQEP_Mode _mode);
+    eQEP(std::string _encoder, eQEP_Mode _mode);
 
     // Reset the value of the encoder
     void set_position(int32_t position);
