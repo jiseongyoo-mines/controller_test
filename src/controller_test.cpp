@@ -248,12 +248,12 @@ int main(int argc, char **argv)
   eqep2b.set_period(100000000L);
 
   // Query back the period
-  std::cout << "[eQEP " << encoder << "] Period = " << eqep2b.get_period() << " ns" << std::endl;
+  std::cout << "[eQEP2b] Period = " << eqep2b.get_period() << " ns" << std::endl;
 
   // Read position indefintely
   while(1)
   {
-  std::cout << "[eQEP " << encoder << "] Position = " << eqep2b.get_position() << std::endl;
+  std::cout << "[eQEP2b] Position = " << eqep2b.get_position() << std::endl;
   }
   
   return 0;
