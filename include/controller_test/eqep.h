@@ -24,6 +24,8 @@
 #include <iostream>
 #include <cstdint>
 #include <string>
+#include <fstream>
+#include <sstream> 
 
 #define eQEP0 "/sys/devices/ocp.2/48300000.epwmss/48300180.eqep"
 #define eQEP1 "/sys/devices/ocp.2/48302000.epwmss/48302180.eqep"
@@ -32,6 +34,10 @@
 // Class which defines an interface to my eQEP driver
 class eQEP
 {
+private:
+        std::ofstream sysfsfid_pinA_state;
+        std::ofstream sysfsfid_pinB_state;
+        
     // Base path for the eQEP unit
     std::string path;
 public:
